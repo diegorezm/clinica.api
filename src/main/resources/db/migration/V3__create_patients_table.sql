@@ -1,0 +1,10 @@
+CREATE TABLE patients (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(14) NOT NULL,
+    rg VARCHAR(12),
+    insurance VARCHAR(255),
+    insurance_number VARCHAR(30),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
