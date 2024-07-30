@@ -9,6 +9,7 @@ import com.api.clinica.services.ServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +42,24 @@ public class AppointmentService implements ServiceInterface<Appointment, Appoint
         appointment.setAppointmentDate(payload.appointmentDate());
         appointment.setStatus(payload.status());
         return appointment;
+    }
+
+    public List<Appointment> bulkInsert(List<AppointmentDTO> paayload, Integer doctorId, Integer patientId) {
+        int batchSize = 30;
+        int total = paayload.size();
+        Patient patient = this.patientService.getById(patientId);
+        Doctor doctor = this.doctorService.getById(doctorId);
+        List<Appointment> response = new ArrayList<>();
+        List<Appointment> appointments = paayload
+                .stream()
+                .map(e -> new Appointment(e, doctor, patient))
+                .toList();
+
+        for (int i = 0; i < total; i += batchSize) {
+            int end = Math.min(i + batchSize, total);
+            response.addAll(appointmentRepository.saveAll(appointments.subList(i, end)));
+        }
+        return response;
     }
 
     @Override
