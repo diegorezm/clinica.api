@@ -1,5 +1,6 @@
 package com.api.clinica.domain.patient;
 
+import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;

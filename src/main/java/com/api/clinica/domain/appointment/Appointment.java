@@ -1,5 +1,6 @@
 package com.api.clinica.domain.appointment;
 
+import com.api.clinica.domain.appointment.dtos.AppointmentDTO;
 import com.api.clinica.domain.doctor.Doctor;
 import com.api.clinica.domain.patient.Patient;
 import com.github.javafaker.Faker;
@@ -52,14 +53,9 @@ public class Appointment {
         return new Appointment(faker.idNumber().hashCode(), randomStatus, appointmentDate, LocalDateTime.now(), LocalDateTime.now(), patient, doctor);
     }
 
-    private static AppointmentStatus getRandomStatus() {
+    public static AppointmentStatus getRandomStatus() {
         AppointmentStatus[] statuses = AppointmentStatus.values();
         int randomIndex = new Random().nextInt(statuses.length);
         return statuses[randomIndex];
-    }
-
-    @Override
-    public String toString() {
-        return "id:" + this.id;
     }
 }

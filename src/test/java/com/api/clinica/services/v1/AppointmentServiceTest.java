@@ -1,7 +1,7 @@
 package com.api.clinica.services.v1;
 
 import com.api.clinica.domain.appointment.Appointment;
-import com.api.clinica.domain.appointment.AppointmentDTO;
+import com.api.clinica.domain.appointment.dtos.AppointmentDTO;
 import com.api.clinica.domain.doctor.Doctor;
 import com.api.clinica.domain.patient.Patient;
 import com.api.clinica.repositories.AppointmentRepository;
@@ -16,12 +16,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AppointmentServiceTest {
 
     @Mock
     private AppointmentRepository appointmentRepository;
+
+    @InjectMocks
+    private AppointmentService appointmentService;
 
     @Mock
     private DoctorService doctorService;
@@ -29,8 +32,8 @@ class AppointmentServiceTest {
     @Mock
     private PatientService patientService;
 
-    @InjectMocks
-    private AppointmentService appointmentService;
+    @Mock
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -46,7 +49,7 @@ class AppointmentServiceTest {
         List<AppointmentDTO> payload = new ArrayList<>();
         for (int i = 0; i < 35; i++) {
             var app = Appointment.createMockAppointment(patient, doctor);
-            payload.add(new AppointmentDTO(doctorId,patientId,app.getStatus(), app.getAppointmentDate())); // Adjust this if your constructor is different
+            payload.add(new AppointmentDTO(doctorId, patientId, app.getStatus(), app.getAppointmentDate())); // Adjust this if your constructor is different
         }
         when(patientService.getById(patientId)).thenReturn(patient);
         when(doctorService.getById(doctorId)).thenReturn(doctor);
@@ -56,4 +59,5 @@ class AppointmentServiceTest {
 
         assertEquals(35, response.size());
     }
+
 }

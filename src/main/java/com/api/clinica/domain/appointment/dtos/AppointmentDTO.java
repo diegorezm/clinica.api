@@ -1,4 +1,6 @@
-package com.api.clinica.domain.appointment;
+package com.api.clinica.domain.appointment.dtos;
+
+import com.api.clinica.domain.appointment.AppointmentStatus;
 
 import java.time.LocalDateTime;
 
